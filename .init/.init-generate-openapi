@@ -1,0 +1,4 @@
+{
+    "command": "./gradlew bootRun",
+    "working_directory": "/home/kavia/workspace/code-generation/comprehensive-learning-management-system-239500-239511/lms_backend"
+}
