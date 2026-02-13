@@ -7,15 +7,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 public abstract class IntegrationTestBase {
 
-	static {
-		// CI environments often don't provide Docker; make integration tests opt-in.
-		// To enable: set RUN_DOCKER_TESTS=true
-		org.junit.jupiter.api.Assumptions.assumeTrue(
-				"true".equalsIgnoreCase(System.getenv("RUN_DOCKER_TESTS")),
-				"Docker-based integration tests are disabled (set RUN_DOCKER_TESTS=true to enable)."
-		);
-	}
-
 	static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
 			.withDatabaseName("lms")
 			.withUsername("lms")
@@ -23,6 +14,13 @@ public abstract class IntegrationTestBase {
 
 	@BeforeAll
 	static void start() {
+		// CI environments often don't provide Docker; make integration tests opt-in.
+		// To enable: set RUN_DOCKER_TESTS=true
+		org.junit.jupiter.api.Assumptions.assumeTrue(
+				"true".equalsIgnoreCase(System.getenv("RUN_DOCKER_TESTS")),
+				"Docker-based integration tests are disabled (set RUN_DOCKER_TESTS=true to enable)."
+		);
+
 		postgres.start();
 	}
 

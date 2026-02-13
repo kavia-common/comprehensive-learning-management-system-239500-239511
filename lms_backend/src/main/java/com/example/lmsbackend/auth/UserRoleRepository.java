@@ -15,8 +15,9 @@ public class UserRoleRepository {
 	}
 
 	public void addRoleToUser(long userId, long roleId) {
+		// Postgres requires an explicit conflict target when using ON CONFLICT with a composite PK.
 		jdbcTemplate.update(
-				"INSERT INTO user_roles(user_id, role_id) VALUES (?, ?) ON CONFLICT DO NOTHING",
+				"INSERT INTO user_roles(user_id, role_id) VALUES (?, ?) ON CONFLICT (user_id, role_id) DO NOTHING",
 				userId, roleId
 		);
 	}
